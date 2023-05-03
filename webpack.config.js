@@ -4,9 +4,12 @@ const miniCss = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: path.resolve(__dirname, 'src/index.js'),
+    entry: {
+        bundle: path.resolve(__dirname, 'src/index.js'),
+        'service-worker': path.resolve(__dirname, 'src/service-worker.js'),
+      },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
     },
     module: {
         rules: [
@@ -33,7 +36,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html"
+            template: "./src/index.html",
+            excludeChunks: ['service-worker'],
         }),
         new miniCss({
             filename: 'style.css',
